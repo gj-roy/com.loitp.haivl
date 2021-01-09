@@ -102,20 +102,11 @@ class SplashActivity : BaseFontActivity() {
 
     private fun goToHome() {
         if (isAnimDone && isCheckReadyDone) {
-            //TODO
 //            logD("goToHome")
-//            val intent = Intent(this, GalleryCoreSplashActivity::class.java).apply {
-//                putExtra(Constants.AD_UNIT_ID_BANNER, getString(R.string.str_b))
-//                putExtra(Constants.BKG_SPLASH_SCREEN, Constants.URL_IMG_11)
-//
-//                //neu muon remove albumn nao thi cu pass id cua album do
-//                val removeAlbumFlickrList = ArrayList<String>()
-//                removeAlbumFlickrList.add(Constants.FLICKR_ID_STICKER)
-//                putStringArrayListExtra(Constants.KEY_REMOVE_ALBUM_FLICKR_LIST, removeAlbumFlickrList)
-//            }
-//            startActivity(intent)
-//            LActivityUtil.tranIn(this)
-//            finishAfterTransition()
+            val intent = Intent(this, MenuActivity::class.java)
+            startActivity(intent)
+            LActivityUtil.tranIn(this)
+            finishAfterTransition()
         }
     }
 
