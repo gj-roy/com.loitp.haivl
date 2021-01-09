@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">iHai</string>
+
+    <!--    https://drive.google.com/drive/starred-->
+    <string name="link_gg_drive"><![CDATA[https://drive.google.com/uc?export=download&id=1femuL17MUTz7t0yqUkMWB5yCea1W6kqI]]></string><!--no need to edit this-->
+
+    <!--    -->
+    <string name="str_b">a</string>
+    <string name="str_f">a</string>
+    <string name="str_app_id">a</string>
+
+    <string name="check_ur_connection">Vui lòng kiểm tra kết nối của bạn</string>
+    <string name="warning">Cảnh báo</string>
+    <string name="press_again_to_exit">Nhấn thêm lần nữa để thoát ứng dụng</string>
+    <string name="rate_app">Đánh giá</string>
+    <string name="more_app">Thêm ứng dụng</string>
+    <string name="share_app">Chia sẻ</string>
+    <string name="application_terms_of_use_privacy_and_privacy_policy">Điều khoản sử dụng ứng dụng, quyền riêng tư và chính sách bảo mật</string>
+    <string name="deny">Từ chối</string>
+    <string name="yes">Đồng ý</string>
+    <string name="setting">Cài đặt</string>
+    <string name="need_permisson">Cần cấp quyền</string>
+    <string name="need_permisson_to_use_app">Vui lòng cấp quyền để sử dụng ứng dụng.</string>
+    <string name="app_is_not_ready">Hiện tại server đang bảo trì, vui lòng quay lại sau.</string>
+    <string name="exit">Thoát</string>
+    <string name="try_again">Thử lại</string>
+</resources>
