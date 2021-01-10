@@ -17,8 +17,8 @@
         app:tabSelectedTextColor="@color/white"
         app:tabTextColor="@color/white" />
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPager"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/flContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/tabLayout" />

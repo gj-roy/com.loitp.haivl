@@ -11,23 +11,26 @@ import com.annotation.LogTag
 import com.core.base.BaseFontActivity
 import com.core.common.Constants
 import com.core.helper.gallery.albumonly.GalleryCorePhotosOnlyFrm
+import com.core.utilities.LScreenUtil
 import com.core.utilities.LSharedPrefsUtil
 import com.core.utilities.LUIUtil
+import com.google.android.material.tabs.TabLayout
 import com.loitp.R
 import com.loitp.model.Flickr
 import com.views.viewpager.viewpagertransformers.ZoomOutSlideTransformer
 import kotlinx.android.synthetic.main.activity_menu.*
 import kotlin.collections.ArrayList
 
-@LogTag("MenuActivity")
+@LogTag("loitppMenuActivity")
 @IsFullScreen(false)
 class MenuActivity : BaseFontActivity() {
 
     companion object {
-        const val KEY_BOOKMARK = "KEY_BOOKMARK"
+        const val KEY_LAST_PAGE = "KEY_LAST_PAGE"
     }
 
     private val listFlickr = ArrayList<Flickr>()
+    private var currentPage = 0
 
     override fun setLayoutResourceId(): Int {
         return R.layout.activity_menu
@@ -62,19 +65,33 @@ class MenuActivity : BaseFontActivity() {
         listFlickr.add(Flickr("Ảnh chế", Constants.FLICKR_ID_VN_ANHCHESACHGIAOKHOA))
         listFlickr.add(Flickr("Ảnh theo tên", Constants.FLICKR_ID_VN_ANHTHEOTEN))
 
-        viewPager.setPageTransformer(true, ZoomOutSlideTransformer())
-        viewPager.adapter = SlidePagerAdapter(supportFragmentManager)
-        tabLayout.setupWithViewPager(viewPager)
-        LUIUtil.changeTabsFont(tabLayout = tabLayout, fontName = Constants.FONT_PATH)
+        listFlickr.forEach {
+            tabLayout.addTab(tabLayout.newTab().setText(it.title))
+        }
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                logD("onTabSelected " + tabLayout.selectedTabPosition)
+                showFragment()
+            }
 
-        val lastPage = LSharedPrefsUtil.instance.getInt(KEY_BOOKMARK, 0)
-        viewPager.setCurrentItem(lastPage, true)
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+
+        })
+
+        currentPage = LSharedPrefsUtil.instance.getInt(KEY_LAST_PAGE, 0)
+        tabLayout.postDelayed({
+            tabLayout.getTabAt(currentPage)?.select()
+        }, 100)
     }
 
     private var doubleBackToExitPressedOnce = false
     override fun onBackPressed() {
         if (doubleBackToExitPressedOnce) {
-            LSharedPrefsUtil.instance.putInt(KEY_BOOKMARK, viewPager.currentItem)
+            LSharedPrefsUtil.instance.putInt(KEY_LAST_PAGE, tabLayout.selectedTabPosition)
             super.onBackPressed()
             return
         }
@@ -85,31 +102,19 @@ class MenuActivity : BaseFontActivity() {
         }, 2000)
     }
 
-    private inner class SlidePagerAdapter(
-            fragmentManager: FragmentManager
-    ) : FragmentStatePagerAdapter(
-            fragmentManager,
-            BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
-    ) {
+    private fun showFragment() {
+        val flickr = listFlickr[tabLayout.selectedTabPosition]
 
-        override fun getItem(position: Int): Fragment {
-            val flickr = listFlickr[position]
-
-            val frm = GalleryCorePhotosOnlyFrm()
-            val bundle = Bundle()
-            bundle.putString(Constants.SK_PHOTOSET_ID, flickr.flickrId)
-            frm.arguments = bundle
-
-            return frm
-        }
-
-        override fun getCount(): Int {
-            return listFlickr.size
-        }
-
-        override fun getPageTitle(position: Int): CharSequence {
-            return listFlickr[position].title
-        }
+        val frm = GalleryCorePhotosOnlyFrm()
+        val bundle = Bundle()
+        bundle.putString(Constants.SK_PHOTOSET_ID, flickr.flickrId)
+        frm.arguments = bundle
+        LScreenUtil.addFragment(
+                activity = this,
+                containerFrameLayoutIdRes = R.id.flContainer,
+                fragment = frm,
+                isAddToBackStack = false
+        )
     }
 
 }
