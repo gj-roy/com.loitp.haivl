@@ -40,6 +40,21 @@ class MenuActivity : BaseFontActivity() {
         setupViews()
     }
 
+    public override fun onPause() {
+        super.onPause()
+        adView.pause()
+    }
+
+    public override fun onResume() {
+        super.onResume()
+        adView.resume()
+    }
+
+    public override fun onDestroy() {
+        super.onDestroy()
+        adView.destroy()
+    }
+
     private fun setupViews() {
 
         //setup data
@@ -84,6 +99,8 @@ class MenuActivity : BaseFontActivity() {
         tabLayout.postDelayed({
             tabLayout.getTabAt(currentPage)?.select()
         }, 100)
+
+        LUIUtil.createAdBanner(adView = adView)
     }
 
     override fun onBackPressed() {
