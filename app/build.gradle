@@ -31,7 +31,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile file("keystoreigallery.jks")
+            storeFile file("keystorehaivl.jks")
             storePassword "04021993"
             keyAlias "loi"
             keyPassword "04021993"
@@ -54,7 +54,7 @@ android {
 
     android.applicationVariants.all { variant ->
         variant.outputs.all {
-            outputFileName = "com.loitp.igallery_" + buildType.name + "_" + defaultConfig.versionName + "_" + defaultConfig.versionCode + ".apk"
+            outputFileName = "com.loitp.haivl_" + buildType.name + "_" + defaultConfig.versionName + "_" + defaultConfig.versionCode + ".apk"
         }
     }
 

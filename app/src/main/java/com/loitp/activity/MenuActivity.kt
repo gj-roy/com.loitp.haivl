@@ -83,7 +83,7 @@ class MenuActivity : BaseFontActivity() {
         }
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                logD("onTabSelected " + tabLayout.selectedTabPosition)
+//                logD("onTabSelected " + tabLayout.selectedTabPosition)
                 showFragment()
             }
 
@@ -96,15 +96,19 @@ class MenuActivity : BaseFontActivity() {
         })
 
         currentPage = LSharedPrefsUtil.instance.getInt(KEY_LAST_PAGE, 0)
-        tabLayout.postDelayed({
-            tabLayout.getTabAt(currentPage)?.select()
-        }, 100)
+        if (currentPage == 0) {
+            showFragment()
+        } else {
+            tabLayout.post {
+                tabLayout.getTabAt(currentPage)?.select()
+            }
+        }
 
         LUIUtil.createAdBanner(adView = adView)
     }
 
     override fun onBackPressed() {
-
+        LSharedPrefsUtil.instance.putInt(KEY_LAST_PAGE, tabLayout.selectedTabPosition)
         showBottomSheetOptionFragment(
                 isCancelableFragment = true,
                 isShowIvClose = true,
