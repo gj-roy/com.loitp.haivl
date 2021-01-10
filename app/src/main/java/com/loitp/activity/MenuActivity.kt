@@ -11,6 +11,7 @@ import com.annotation.LogTag
 import com.core.base.BaseFontActivity
 import com.core.common.Constants
 import com.core.helper.gallery.albumonly.GalleryCorePhotosOnlyFrm
+import com.core.utilities.LSharedPrefsUtil
 import com.core.utilities.LUIUtil
 import com.loitp.R
 import com.loitp.model.Flickr
@@ -21,6 +22,11 @@ import kotlin.collections.ArrayList
 @LogTag("MenuActivity")
 @IsFullScreen(false)
 class MenuActivity : BaseFontActivity() {
+
+    companion object {
+        const val KEY_BOOKMARK = "KEY_BOOKMARK"
+    }
+
     private val listFlickr = ArrayList<Flickr>()
 
     override fun setLayoutResourceId(): Int {
@@ -60,11 +66,15 @@ class MenuActivity : BaseFontActivity() {
         viewPager.adapter = SlidePagerAdapter(supportFragmentManager)
         tabLayout.setupWithViewPager(viewPager)
         LUIUtil.changeTabsFont(tabLayout = tabLayout, fontName = Constants.FONT_PATH)
+
+        val lastPage = LSharedPrefsUtil.instance.getInt(KEY_BOOKMARK, 0)
+        viewPager.setCurrentItem(lastPage, true)
     }
 
     private var doubleBackToExitPressedOnce = false
     override fun onBackPressed() {
         if (doubleBackToExitPressedOnce) {
+            LSharedPrefsUtil.instance.putInt(KEY_BOOKMARK, viewPager.currentItem)
             super.onBackPressed()
             return
         }
