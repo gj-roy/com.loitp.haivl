@@ -24,4 +24,7 @@
     <string name="app_is_not_ready">Hiện tại server đang bảo trì, vui lòng quay lại sau.</string>
     <string name="exit">Thoát</string>
     <string name="try_again">Thử lại</string>
+    <string name="do_you_want_to_exit">Bạn có muốn thoát ứng dụng?</string>
+    <string name="share">Chia sẻ</string>
+    <string name="rate">Đánh giá</string>
 </resources>

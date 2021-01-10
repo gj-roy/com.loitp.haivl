@@ -11,9 +11,7 @@ import com.annotation.LogTag
 import com.core.base.BaseFontActivity
 import com.core.common.Constants
 import com.core.helper.gallery.albumonly.GalleryCorePhotosOnlyFrm
-import com.core.utilities.LScreenUtil
-import com.core.utilities.LSharedPrefsUtil
-import com.core.utilities.LUIUtil
+import com.core.utilities.*
 import com.google.android.material.tabs.TabLayout
 import com.loitp.R
 import com.loitp.model.Flickr
@@ -88,18 +86,30 @@ class MenuActivity : BaseFontActivity() {
         }, 100)
     }
 
-    private var doubleBackToExitPressedOnce = false
     override fun onBackPressed() {
-        if (doubleBackToExitPressedOnce) {
-            LSharedPrefsUtil.instance.putInt(KEY_LAST_PAGE, tabLayout.selectedTabPosition)
-            super.onBackPressed()
-            return
-        }
-        this.doubleBackToExitPressedOnce = true
-        showLongInformation(msg = getString(R.string.press_again_to_exit), isTopAnchor = false)
-        Handler(Looper.getMainLooper()).postDelayed({
-            doubleBackToExitPressedOnce = false
-        }, 2000)
+
+        showBottomSheetOptionFragment(
+                isCancelableFragment = true,
+                isShowIvClose = true,
+                title = getString(R.string.app_name),
+                message = getString(R.string.do_you_want_to_exit),
+                textButton1 = getString(R.string.share),
+                textButton2 = getString(R.string.rate),
+                textButton3 = getString(R.string.exit),
+                onClickButton1 = {
+                    LSocialUtil.shareApp(this)
+                },
+                onClickButton2 = {
+                    LSocialUtil.moreApp(this)
+                },
+                onClickButton3 = {
+                    finish()
+                    LActivityUtil.tranOut(this)
+                },
+                onDismiss = {
+                    //do nothing
+                }
+        )
     }
 
     private fun showFragment() {
