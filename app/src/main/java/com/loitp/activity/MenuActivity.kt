@@ -1,19 +1,16 @@
 package com.loitp.activity
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.viewpager.widget.PagerAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
 import com.annotation.IsFullScreen
 import com.annotation.LogTag
 import com.core.base.BaseFontActivity
 import com.core.common.Constants
+import com.core.helper.gallery.albumonly.GalleryCorePhotosOnlyFrm
 import com.core.utilities.LStoreUtil
 import com.core.utilities.LUIUtil
 import com.loitp.R
@@ -37,13 +34,13 @@ class MenuActivity : BaseFontActivity() {
     }
 
     private fun setupViews() {
-        for (i in 0..19) {
+        for (i in 0..5) {
             resList.add(LStoreUtil.randomColor)
         }
         viewPager.setPageTransformer(true, ZoomOutSlideTransformer())
-        viewPager.adapter = SlidePagerAdapter()
+        viewPager.adapter = SlidePagerAdapter(supportFragmentManager)
         tabLayout.setupWithViewPager(viewPager)
-        LUIUtil.changeTabsFont(tabLayout, Constants.FONT_PATH)
+        LUIUtil.changeTabsFont(tabLayout = tabLayout, fontName = Constants.FONT_PATH)
     }
 
     private var doubleBackToExitPressedOnce = false
@@ -59,39 +56,26 @@ class MenuActivity : BaseFontActivity() {
         }, 2000)
     }
 
-    private inner class SlidePagerAdapter : PagerAdapter() {
-        @SuppressLint("SetTextI18n")
-        override fun instantiateItem(collection: ViewGroup, position: Int): Any {
-//            val res = resList[position]
-            val inflater = LayoutInflater.from(this@MenuActivity)
-            val layout = inflater.inflate(R.layout.item_photo_slide_iv, collection, false) as ViewGroup
-            val imageView = layout.findViewById<ImageView>(R.id.imageView)
-            if (position % 2 == 0) {
-                imageView.setImageResource(R.drawable.l_bkg_city)
-            } else {
-                imageView.setImageResource(R.drawable.logo)
-            }
-            val tv = layout.findViewById<TextView>(R.id.textView)
-            tv.text = position.toString() + "/" + resList.size
-            collection.addView(layout)
-            return layout
-        }
+    private inner class SlidePagerAdapter(
+            fragmentManager: FragmentManager
+    ) : FragmentStatePagerAdapter(
+            fragmentManager,
+            BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
+    ) {
 
-        override fun destroyItem(collection: ViewGroup, position: Int, view: Any) {
-            if (view is View) {
-                collection.removeView(view)
-            }
+        override fun getItem(position: Int): Fragment {
+            val frm = GalleryCorePhotosOnlyFrm()
+            val bundle = Bundle()
+            bundle.putString(Constants.SK_PHOTOSET_ID, Constants.FLICKR_ID_MANGA)
+            frm.arguments = bundle
+            return frm
         }
 
         override fun getCount(): Int {
-            return resList.size
+            return 5
         }
 
-        override fun isViewFromObject(view: View, `object`: Any): Boolean {
-            return view === `object`
-        }
-
-        override fun getPageTitle(position: Int): CharSequence? {
+        override fun getPageTitle(position: Int): CharSequence {
             return "Page Title $position"
         }
     }
