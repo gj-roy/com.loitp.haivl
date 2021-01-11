@@ -8,10 +8,7 @@ import android.os.Bundle
 import android.provider.Settings
 import com.annotation.IsFullScreen
 import com.annotation.LogTag
-import com.core.base.BaseApplication
 import com.core.base.BaseFontActivity
-import com.core.common.Constants
-import com.core.helper.gallery.GalleryCoreSplashActivity
 import com.core.utilities.*
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -164,22 +161,25 @@ class SplashActivity : BaseFontActivity() {
                         onBackPressed()
                     },
                     onClickButton2 = {
-                        checkReady()
+                        if (BuildConfig.DEBUG) {
+                            setReady()
+                        } else {
+                            checkReady()
+                        }
                     }
             )
             alertDial.setCancelable(false)
         }
     }
 
-    private fun checkReady() {
-
-        fun setReady() {
-            runOnUiThread {
-                isCheckReadyDone = true
-                goToHome()
-            }
+    private fun setReady() {
+        runOnUiThread {
+            isCheckReadyDone = true
+            goToHome()
         }
+    }
 
+    private fun checkReady() {
         if (LPrefUtil.getCheckAppReady()) {
 //            logD("checkReady getCheckAppReady return")
             setReady()
