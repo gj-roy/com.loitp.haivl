@@ -19,6 +19,7 @@ import com.views.viewpager.viewpagertransformers.ZoomOutSlideTransformer
 import kotlinx.android.synthetic.main.activity_menu.*
 import kotlin.collections.ArrayList
 
+//TODO update vs moi roi check scroll de visible hide tabLayout
 @LogTag("MenuActivity")
 @IsFullScreen(false)
 class MenuActivity : BaseFontActivity() {
