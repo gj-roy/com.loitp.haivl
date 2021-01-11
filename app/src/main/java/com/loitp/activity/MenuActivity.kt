@@ -19,7 +19,7 @@ import com.views.viewpager.viewpagertransformers.ZoomOutSlideTransformer
 import kotlinx.android.synthetic.main.activity_menu.*
 import kotlin.collections.ArrayList
 
-@LogTag("loitppMenuActivity")
+@LogTag("MenuActivity")
 @IsFullScreen(false)
 class MenuActivity : BaseFontActivity() {
 
