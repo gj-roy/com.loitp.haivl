@@ -3,11 +3,10 @@ package com.loitp.activity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
+import android.view.View
 import com.annotation.IsFullScreen
 import com.annotation.LogTag
+import com.core.base.BaseApplication
 import com.core.base.BaseFontActivity
 import com.core.common.Constants
 import com.core.helper.gallery.albumonly.GalleryCorePhotosOnlyFrm
@@ -15,12 +14,9 @@ import com.core.utilities.*
 import com.google.android.material.tabs.TabLayout
 import com.loitp.R
 import com.loitp.model.Flickr
-import com.views.viewpager.viewpagertransformers.ZoomOutSlideTransformer
 import kotlinx.android.synthetic.main.activity_menu.*
-import kotlin.collections.ArrayList
 
-//TODO update vs moi roi check scroll de visible hide tabLayout
-@LogTag("MenuActivity")
+@LogTag("loitppMenuActivity")
 @IsFullScreen(false)
 class MenuActivity : BaseFontActivity() {
 
@@ -134,10 +130,33 @@ class MenuActivity : BaseFontActivity() {
         )
     }
 
+    private val mHandlerScroll = Handler(Looper.getMainLooper())
     private fun showFragment() {
         val flickr = listFlickr[tabLayout.selectedTabPosition]
+        logD("showFragment flickr " + BaseApplication.gson.toJson(flickr))
 
-        val frm = GalleryCorePhotosOnlyFrm()
+        val frm = GalleryCorePhotosOnlyFrm(
+                onTop = {
+                    logD("onTop")
+                },
+                onBottom = {
+                    logD("onBottom")
+
+                },
+                onScrolled = { isScrollDown ->
+                    logD("onScrolled isScrollDown $isScrollDown")
+                    mHandlerScroll.removeCallbacksAndMessages(null)
+                    mHandlerScroll.postDelayed({
+                        tabLayout?.let { tl ->
+                            if (isScrollDown) {
+                                tl.visibility = View.GONE
+                            } else {
+                                tl.visibility = View.VISIBLE
+                            }
+                        }
+                    }, 300)
+                }
+        )
         val bundle = Bundle()
         bundle.putString(Constants.SK_PHOTOSET_ID, flickr.flickrId)
         frm.arguments = bundle
