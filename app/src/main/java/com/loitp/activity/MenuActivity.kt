@@ -149,11 +149,13 @@ class MenuActivity : BaseFontActivity() {
                     mHandlerScroll.postDelayed({
                         tabLayout?.let { tl ->
                             if (isScrollDown) {
+                                logD("isScrollDown")
 //                                LScreenUtil.toggleFullscreen(activity = this, isFullScreen = true)
-                                tl.visibility = View.GONE
+//                                tl.visibility = View.GONE
                             } else {
+                                logD("isScrollDown !")
 //                                LScreenUtil.toggleFullscreen(activity = this, isFullScreen = false)
-                                tl.visibility = View.VISIBLE
+//                                tl.visibility = View.VISIBLE
                             }
                         }
                     }, 300)
