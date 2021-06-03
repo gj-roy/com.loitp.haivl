@@ -1,8 +1,8 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Xam Xi</string>
 
     <!--    https://drive.google.com/drive/starred-->
-    <string name="link_gg_drive"><![CDATA[https://drive.google.com/uc?export=download&id=1femuL17MUTz7t0yqUkMWB5yCea1W6kqI]]></string><!--no need to edit this-->
+    <string name="link_gg_drive" tools:ignore="Typos"><![CDATA[https://drive.google.com/uc?export=download&id=1femuL17MUTz7t0yqUkMWB5yCea1W6kqI]]></string><!--no need to edit this-->
 
     <!--    https://apps.admob.com/v2/apps/5364412676/overview-->
     <string name="str_b">ca-app-pub-3165963943681013/9112085997</string>
@@ -11,10 +11,6 @@
 
     <string name="check_ur_connection">Vui lòng kiểm tra kết nối của bạn</string>
     <string name="warning">Cảnh báo</string>
-    <string name="press_again_to_exit">Nhấn thêm lần nữa để thoát ứng dụng</string>
-    <string name="rate_app">Đánh giá</string>
-    <string name="more_app">Thêm ứng dụng</string>
-    <string name="share_app">Chia sẻ</string>
     <string name="application_terms_of_use_privacy_and_privacy_policy">Điều khoản sử dụng ứng dụng, quyền riêng tư và chính sách bảo mật</string>
     <string name="deny">Từ chối</string>
     <string name="yes">Đồng ý</string>
