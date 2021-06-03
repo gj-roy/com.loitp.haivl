@@ -3,7 +3,6 @@ package com.loitp.activity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.View
 import com.annotation.IsFullScreen
 import com.annotation.LogTag
 import com.core.base.BaseApplication
@@ -107,26 +106,26 @@ class MenuActivity : BaseFontActivity() {
     override fun onBackPressed() {
         LSharedPrefsUtil.instance.putInt(KEY_LAST_PAGE, tabLayout.selectedTabPosition)
         showBottomSheetOptionFragment(
-                isCancelableFragment = true,
-                isShowIvClose = true,
-                title = getString(R.string.app_name),
-                message = getString(R.string.do_you_want_to_exit),
-                textButton1 = getString(R.string.share),
-                textButton2 = getString(R.string.rate),
-                textButton3 = getString(R.string.exit),
-                onClickButton1 = {
-                    LSocialUtil.shareApp(this)
-                },
-                onClickButton2 = {
-                    LSocialUtil.rateApp(this)
-                },
-                onClickButton3 = {
-                    finish()
-                    LActivityUtil.tranOut(this)
-                },
-                onDismiss = {
-                    //do nothing
-                }
+            isCancelableFragment = true,
+            isShowIvClose = true,
+            title = getString(R.string.app_name),
+            message = getString(R.string.do_you_want_to_exit),
+            textButton1 = getString(R.string.share),
+            textButton2 = getString(R.string.rate),
+            textButton3 = getString(R.string.exit),
+            onClickButton1 = {
+                LSocialUtil.shareApp(this)
+            },
+            onClickButton2 = {
+                LSocialUtil.rateApp(this)
+            },
+            onClickButton3 = {
+                finish()
+                LActivityUtil.tranOut(this)
+            },
+            onDismiss = {
+                //do nothing
+            }
         )
     }
 
@@ -136,39 +135,39 @@ class MenuActivity : BaseFontActivity() {
         logD("showFragment flickr " + BaseApplication.gson.toJson(flickr))
 
         val frm = GalleryCorePhotosOnlyFrm(
-                onTop = {
-                    logD("onTop")
-                },
-                onBottom = {
-                    logD("onBottom")
+            onTop = {
+                logD("onTop")
+            },
+            onBottom = {
+                logD("onBottom")
 
-                },
-                onScrolled = { isScrollDown ->
-                    logD("onScrolled isScrollDown $isScrollDown")
-                    mHandlerScroll.removeCallbacksAndMessages(null)
-                    mHandlerScroll.postDelayed({
-                        tabLayout?.let { tl ->
-                            if (isScrollDown) {
-                                logD("isScrollDown")
+            },
+            onScrolled = { isScrollDown ->
+                logD("onScrolled isScrollDown $isScrollDown")
+                mHandlerScroll.removeCallbacksAndMessages(null)
+                mHandlerScroll.postDelayed({
+                    tabLayout?.let { tl ->
+                        if (isScrollDown) {
+                            logD("isScrollDown")
 //                                LScreenUtil.toggleFullscreen(activity = this, isFullScreen = true)
 //                                tl.visibility = View.GONE
-                            } else {
-                                logD("isScrollDown !")
+                        } else {
+                            logD("isScrollDown !")
 //                                LScreenUtil.toggleFullscreen(activity = this, isFullScreen = false)
 //                                tl.visibility = View.VISIBLE
-                            }
                         }
-                    }, 300)
-                }
+                    }
+                }, 300)
+            }
         )
         val bundle = Bundle()
         bundle.putString(Constants.SK_PHOTOSET_ID, flickr.flickrId)
         frm.arguments = bundle
         LScreenUtil.addFragment(
-                activity = this,
-                containerFrameLayoutIdRes = R.id.flContainer,
-                fragment = frm,
-                isAddToBackStack = false
+            activity = this,
+            containerFrameLayoutIdRes = R.id.flContainer,
+            fragment = frm,
+            isAddToBackStack = false
         )
     }
 
